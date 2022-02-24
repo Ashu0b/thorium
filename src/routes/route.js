@@ -1,31 +1,76 @@
 const express = require('express');
 const router = express.Router();
-let players =[];
- 
- 
-   router.post('/players', function (req, res) {
- let player=req.body;
- for(let i= 0; i<players.length;i++){
-     if (players[i].name == playerName){
-         res.send('player already exists')
-     }
- }
- players.push(players);
- console.log("here is the player array", players)
- res.send(players);      
-     
-   });
-  
-   router.post('/players/:playerName/bookings/:bookingId',function(req,res){
-let name =req.params.playerName
-let isPlayerPresent = false
-for(let i=0;i<players.length;i++){
-  if(players[i].name==name) {
-    isPlayerPresent = true
-  }
-}
-if (isPlayerPresent){
-  res.send('Player not present')
-}
-res.send('player is present')
+// QUERY PARAMS
+// localhost:3000/get-query-1?myCoolVar=24&xyz=hiFunctionUP
+router.get("/get-query-1", function (req, res) {
+  let data = req.query
+  console.log(data)
+  res.send({ data: data, status: true })
+})
+
+
+// take marks in req.query variable named "marks" and send "pass" if > 40 else "fail"
+router.get("/get-query-2", function (req, res) {
+  let marks = req.query.marks
+  // { marks: '80'}
+
+  let result = marks > 41 ? "pass" : "fail"
+  // let result = "fail"
+  // if (marks> 40) { result = "pass" }
+  // // else { result = "fail" }
+
+  res.send({ result: result, status: true })
+})
+
+
+router.post("/post-query-1", function (req, res) {
+  let data = req.query
+  console.log(data)
+  res.send({ result: data, status: true })
 });
+let myArr = [23, 45, 67, 281394, 32424, 423, 24, 42323, 4, 234, 12, 34]
+router.post("/post-query-2", function (req, res) {
+  
+  let input= req.query.input
+  let finalArr= myArr.filter( ele => ele > input)
+
+  res.send({ result: finalArr , status: true })
+})
+
+
+// ASSIGNMENT:
+// you will be given an array of persons ( i.e an array of objects )..each person will have  a {name: String , age: Number, votingStatus: true/false(Boolean)}
+// take input in query param as votingAge..and for all the people above that age, change votingStatus as true
+// also return an array consisting of only the person that can vote
+
+//  take this as sample for array of persons:
+// let persons= [
+//     {
+//     name: "PK",
+//     age: 10,
+//     votingStatus: false
+// },
+// {
+//     name: "SK",
+//     age: 20,
+//     votingStatus: false
+// },
+// {
+//     name: "AA",
+//     age: 70,
+//     votingStatus: false
+// },
+// {
+//     name: "SC",
+//     age: 5,
+//     votingStatus: false
+// },
+// {
+//     name: "HO",
+//     age: 40,
+//     votingStatus: false
+// }
+// ]
+
+
+module.exports = router;
