@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
-let obj=require('./logger')
-router.get('/test-me', function (req, res) {
-     res.send('Welcome to my application. I am Ashis and a part of FunctionUp Thorium cohort')
-     console.log(obj.endpoint)
-    obj.log('Welcome')
+let players =[];
+ 
+ 
+   router.post('/players', function (req, res) {
+ let player=req.body;
+ for(let i= 0; i<players.length;i++){
+     if (players[i].name == playerName){
+         res.send('player already exists')
+     }
+ }
+ players.push(players);
+ console.log("here is the player array", players)
+ res.send(players);      
+     
+   });
+  
    
-});
 
-module.exports = router;
+
