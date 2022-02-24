@@ -16,6 +16,16 @@ let players =[];
      
    });
   
-   
-
-
+   router.post('/players/:playerName/bookings/:bookingId',function(req,res){
+let name =req.params.playerName
+let isPlayerPresent = false
+for(let i=0;i<players.length;i++){
+  if(players[i].name==name) {
+    isPlayerPresent = true
+  }
+}
+if (isPlayerPresent){
+  res.send('Player not present')
+}
+res.send('player is present')
+});
