@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/test-me', function (req, res) {
-    res.send('My first ever api!')
+welcome.get('/test-me', function (req, res) {
+    res.send('Welcome to my application. I am Ashis and a part of FunctionUp Thorium cohort')
 });
 
-module.exports = router;
+module.exports = welcome;
