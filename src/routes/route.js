@@ -43,34 +43,41 @@ router.post("/post-query-2", function (req, res) {
 // take input in query param as votingAge..and for all the people above that age, change votingStatus as true
 // also return an array consisting of only the person that can vote
 
-//  take this as sample for array of persons:
-// let persons= [
-//     {
-//     name: "PK",
-//     age: 10,
-//     votingStatus: false
-// },
-// {
-//     name: "SK",
-//     age: 20,
-//     votingStatus: false
-// },
-// {
-//     name: "AA",
-//     age: 70,
-//     votingStatus: false
-// },
-// {
-//     name: "SC",
-//     age: 5,
-//     votingStatus: false
-// },
-// {
-//     name: "HO",
-//     age: 40,
-//     votingStatus: false
-// }
-// ]
 
+let persons= [
+    {
+    name: "PK",
+    age: 10,
+    votingStatus: false
+},
+{
+    name: "SK",
+    age: 20,
+    votingStatus: false
+},
+{
+    name: "AA",
+    age: 70,
+    votingStatus: false
+},
+{
+    name: "SC",
+    age: 5,
+    votingStatus: false
+},
+{
+    name: "HO",
+    age: 40,
+    votingStatus: false
+}
+]
+router.post("/voting", function(req, res){
+  let age = req.query.votingAge
+  const elegible= persons.filter((x) => x.age > age)
+  for (let person of elegible){
+      person.votingStatus = true
+  }
+  return res.send(elegible)
+})
 
 module.exports = router;
