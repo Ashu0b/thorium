@@ -12,4 +12,5 @@ const getBooksData= async function (req, res) {
     let allBooks= await BookModel.find( { authorName , bookName  } )
 }
 const getBooksData= async function (req, res) {
-    let allBooks= await BookModel.find({pages: { $gt:  50 } ) 
+    let allBooks= await BookModel.find("{pages: { $gt:  500 }" ) 
+}
