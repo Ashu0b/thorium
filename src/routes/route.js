@@ -6,7 +6,7 @@ const bookController= require("../controllers/bookController")
 const publisherController = require("../controllers/publisherController")
 
 router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
+    res.send("im a good web developer")
 })
 
 router.post("/createBook", bookController.createBook  )
@@ -17,5 +17,8 @@ router.post("/createAuthor", authorController.createAuthor  )
 
 router.post("/createPublisher", publisherController.createPublisher  )
 
+router.put("/putBook", bookController.putBook)
+
+router.put("/updateByRatings", bookController.updateByRatings)
 
 module.exports = router;
