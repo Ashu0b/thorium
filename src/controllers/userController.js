@@ -2,12 +2,10 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
 const user = async function (abcd, xyz) {
-  //You can name the req, res objects anything.
-  //but the first parameter is always the request 
-  //the second parameter is always the response
+ 
   let data = abcd.body;
   let savedData = await userModel.create(data);
-  console.log(req.newAtribute);
+  //console.log(req.newAtribute);
   xyz.send({ msg: savedData });
 };
 
@@ -71,6 +69,20 @@ const updateUser = async function (req, res) {
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData,{new:true});
   res.send({ status: updatedUser, data: updatedUser });
 };
+const postMessage = async function (req, res) {
+  let message = req.body.message
+
+  let user = await userModel.findById(req.params.userId)
+  if(!user) return res.send({status: false, msg: 'No such user exists'})
+  
+  let updatedPosts = user.posts
+  //add the message to user's posts
+  updatedPosts.push(message)
+  let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
+
+  //return the updated user document
+  return res.send({status: true, data: updatedUser})
+}
 
 const isdeletedUser = async function (req, res) {
   let isDeletedId = req.params.userId;
@@ -84,3 +96,4 @@ module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
 module.exports.deleteUser=isdeletedUser;
+module.exports.postMessage=postMessage;

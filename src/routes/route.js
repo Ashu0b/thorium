@@ -17,7 +17,7 @@ router.post("/login", userController.loginUser)
 router.get("/users/:userId",tokenCheck.middle, userController.getUserData)
 
 router.put("/users/:userId",tokenCheck.middle,userController.updateUser)
-
+router.post("/users/:userId/posts",tokenCheck.middle, userController.postMessage)
 router.delete("/users/:userId",tokenCheck.middle, userController.deleteUser)
 
 
