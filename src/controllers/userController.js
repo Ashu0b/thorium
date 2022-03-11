@@ -1,13 +1,23 @@
+const res = require("express/lib/response");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
 const user = async function (abcd, xyz) {
- 
+ try {
   let data = abcd.body;
+  if (data) {
   let savedData = await userModel.create(data);
-  //console.log(req.newAtribute);
-  xyz.send({ msg: savedData });
-};
+  xyz.send(201).send({ msg: savedData })
+}
+else 
+res.status(400).send({msg:""})
+ }
+ catch (err){
+   console.log("this is the error:",err.message)
+   res.send({msg:"error",error:err.message})
+ }
+ };
+
 
 const loginUser = async function (req, res) {
   let userName = req.body.emailId;
