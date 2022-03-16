@@ -13,7 +13,7 @@ const blogsCreate = async function (req, res) {
         let isAuthorPresent = await authorModel.findById(authorId);
 
         if (!isAuthorPresent) {
-            res.send({ msg: "user Id is not present" })
+            res.send({ msg: "user authorId is not present" })
         }
 
         let createEntryInBlog = await blogsmodel.create(blogsData);
@@ -52,7 +52,6 @@ const getBlogs = async function (req, res) {
 
 }
 
-
 const updateBlog = async function (req, res) {
 
     try {
@@ -60,9 +59,9 @@ const updateBlog = async function (req, res) {
         let blogId = req.params.blogId;
         // console.log(blogId);
         // console.log("0");
-        let isBlogPresenet = await blogsmodel.findOne({_id:blogId})
+        let isBlogPresenet = await blogsmodel.findOne({ _id: blogId })
         console.log(isBlogPresenet);
-       
+
         if (!isBlogPresenet) {
             res.send({ err: "blog not found" })
         }
@@ -81,7 +80,8 @@ const updateBlog = async function (req, res) {
             data.deletedAt = moment().format()
         }
         // console.log("4");
-        const updatedBlogInLast = await blogsmodel.findOneAndUpdate({ _id: id }, data, { new: true })
+       
+        const updatedBlogInLast = await blogsmodel.findByIdAndUpdate(blogId,data,{new:true})
         console.log(updatedBlogInLast);
         res.status(201).send({ status: true, msg: updatedBlogInLast })
 
@@ -94,30 +94,31 @@ const updateBlog = async function (req, res) {
 
 }
 
-const deleteBlog = async function(req,res){
+const deleteBlog = async function (req, res) {
 
-    try{  
+    try {
         let blogsId = req.params.blogId;
-        let present = await blogsmodel.findOneAndUpdate({$and:[{_id:blogsId},{isDeleted:false}],$set:{isDeleted:true},new:true})
+        let present = await blogsmodel.findOneAndUpdate({ $and: [{ _id: blogsId }, { isDeleted: false }], $set: { isDeleted: true }, new: true })
         res.status(200).send({})
 
     }
-    catch(err){
-        res.send({status:false,data:err.message})
+    catch (err) {
+        res.send({ status: false, data: err.message })
+    }
 }
-}   
 
-const deleteBlogs = async function(req,res){
-   try{
-    let data = req.query;
-    let filter = {
-        isPublished:false,
-        ...data};
-    let findBlogs = await blogsmodel.findOneAndDelete(filter);
-    res.send({msg:findBlogs})
-   }catch(err){
-       res.status(404).send({status:false,msg:""})
-   }
+const deleteBlogs = async function (req, res) {
+    try {
+        let data = req.query;
+        let filter = {
+            isPublished: false,
+            ...data
+        };
+        let findBlogs = await blogsmodel.findOneAndDelete(filter);
+        res.send({ msg: findBlogs })
+    } catch (err) {
+        res.status(404).send({ status: false, msg: "" })
+    }
 }
 
 module.exports.deleteBlogs = deleteBlogs;
